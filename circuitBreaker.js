@@ -1,9 +1,5 @@
 'use strict'
 
-// const resetCount = 3;
-// const resetTime = 5000; //ms
-// const timeCircOn = 10000; //ms
-
 class CircuitBreaker {
 
   constructor(resetCount, resetTime, circuitOnTime){
@@ -45,7 +41,7 @@ class CircuitBreaker {
       else { // circuit breaker inactive
         // if time between 2 request of the same type is greater than resetTime then reset counter
         if ( (self.cbLstRqMap.get (req.url) !== undefined)   && ( (self.timeIn - self.cbLstRqMap.get (req.url)) > self.resetTime )){
-          self.cbErrorMap.set( req.url, resetCount);
+          self.cbErrorMap.set( req.url, self.resetCount);
         }
         next();
       }
