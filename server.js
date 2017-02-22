@@ -2,13 +2,10 @@
 
 let express = require('express');
 let rnd = require('./randomStatus');
-let CB = require('./circuitBreaker').CircuitBreaker;
-
-let ccb = new CB(5, 10000, 30000);
-
+let ccb = require('./circuitBreaker');
 let app = express();
 
-app.use( ccb.enterCircBreak() );
+app.use( ccb.enterCircBreak );
 app.get('/', function(req, res, next) {
 //  setTimeout(function(){
 //    console.log('100ms timeout ...');
@@ -27,7 +24,7 @@ app.get('/info/:id', function(req, res, next) {
     next();
 });
 
-app.use( ccb.exitCircBreak() );
+app.use( ccb.exitCircBreak );
 
 let server = app.listen(8081, () => {
   let host = server.address().address;
